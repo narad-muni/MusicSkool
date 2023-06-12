@@ -3,10 +3,10 @@ import json
 from urllib.parse import urlparse, parse_qs
 from utils.db import execute_query
 from utils.migrate import init, poppulate
+from .controllers import auth
 
 # A dictionary to store session data
 sessions = {}
-
 
 class MyHandler(http.server.BaseHTTPRequestHandler):
 
@@ -19,6 +19,20 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
                 if name == 'session_id':
                     return value
         return None
+    
+    def send_file(file_name,self):
+        with open(file_name, 'r') as file:
+            content = file.read()
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+            self.wfile.write(content.encode())
+    
+    def set_session(self):
+        session_id = self.generate_session_id()
+        # Store the session data
+        sessions[session_id] = {}
+        self.send_header('Set-Cookie', f'session_id={session_id}; Path=/')
 
     def generate_session_id(self):
         # Generate a unique session ID (you can modify this as per your requirements)
@@ -35,19 +49,31 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
         content_length = int(self.headers['Content-Length'])
         post_data = self.rfile.read(content_length).decode('utf-8')
 
+        self.set_session()
         session_id = self.get_session_id()
-
-        if session_id is not None and session_id in sessions:
-            # If session exists, retrieve the session data
-            session_data = sessions[session_id]
+        session = sessions[session_id]
 
         try:
             data = json.loads(post_data)
         except: 
-            pass
+            error_resp = {
+                'status': 'error',
+                'message': 'some error occured'
+            }
+
+            response_json = json.dumps(error_resp)
+
+            self._set_response()
+            self.wfile.write(response_json.encode())
+
+            return
 
         if(parsed_path == "/api/login"):
-            pass
+            auth.login(session, data)
+        elif(parsed_path == "/api/logout"):
+            auth.logout(session, data)
+        elif(parsed_path == "/api/get_user"):
+            auth.get_user(session, data)
         else:
             error_resp = {
                 'status': 'error',
@@ -62,27 +88,10 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         parsed_path = urlparse(self.path)
 
-        if parsed_path.path == '/users':
-            users = execute_query('SELECT * FROM users')
-            response = json.dumps(users)
-            self.send_response(200)
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            self.wfile.write(response.encode())
-        elif parsed_path.path == '/':
-            with open('pages/index.html', 'r') as file:
-                content = file.read()
-                self.send_response(200)
-                self.send_header('Content-type', 'text/html')
-                self.end_headers()
-                self.wfile.write(content.encode())
+        if parsed_path.path == '/':
+            self.send_file("pages/index.html")
         else:
-            with open('pages/404.html', 'r') as file:
-                content = file.read()
-                self.send_response(200)
-                self.send_header('Content-type', 'text/html')
-                self.end_headers()
-                self.wfile.write(content.encode())
+            self.send_file("pages/404.html")
 
 # init()
 poppulate()
@@ -97,69 +106,3 @@ print(f"API server running at http://localhost:{PORT}")
 
 # Start the server
 httpd.serve_forever()
-
-
-'''
-
-def do_GET(self):
-        if self.path == '/':
-            self.send_response(200)
-            self.send_header('Content-type', 'text/html')
-            self.end_headers()
-
-            # Check if a session cookie is present
-            session_id = self.get_session_id()
-
-            if session_id is not None and session_id in sessions:
-                # If session exists, retrieve the session data
-                session_data = sessions[session_id]
-                self.wfile.write(f"Logged in as {session_data['username']}".encode())
-            else:
-                # If no session, show login form
-                self.wfile.write(b"You are not logged in. <a href='/login'>Login</a>")
-
-        elif self.path == '/login':
-            self.send_response(200)
-            self.send_header('Content-type', 'text/html')
-            self.end_headers()
-            self.wfile.write(b\'''
-                <form action="/login" method="post">
-                    <p><input type="text" name="username" placeholder="Username"></p>
-                    <p><input type="submit" value="Login"></p>
-                </form>
-            \''')
-
-        else:
-            self.send_response(404)
-            self.send_header('Content-type', 'text/html')
-            self.end_headers()
-            self.wfile.write(b"404 Not Found")
-
-    def do_POST(self):
-        if self.path == '/login':
-            content_length = int(self.headers['Content-Length'])
-            post_data = self.rfile.read(content_length).decode()
-
-            # Parse the form data
-            form_data = parse_qs(post_data)
-            username = form_data.get('username', [''])[0]
-
-            # Generate a session ID
-            session_id = self.generate_session_id()
-
-            # Store the session data
-            sessions[session_id] = {'username': username}
-
-            # Set the session ID as a cookie
-            self.send_response(302)
-            self.send_header('Location', '/')
-            self.send_header('Set-Cookie', f'session_id={session_id}; Path=/')
-            self.end_headers()
-
-        else:
-            self.send_response(404)
-            self.send_header('Content-type', 'text/html')
-            self.end_headers()
-            self.wfile.write(b"404 Not Found")
-
-'''
