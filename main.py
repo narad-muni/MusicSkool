@@ -97,3 +97,69 @@ print(f"API server running at http://localhost:{PORT}")
 
 # Start the server
 httpd.serve_forever()
+
+
+'''
+
+def do_GET(self):
+        if self.path == '/':
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+
+            # Check if a session cookie is present
+            session_id = self.get_session_id()
+
+            if session_id is not None and session_id in sessions:
+                # If session exists, retrieve the session data
+                session_data = sessions[session_id]
+                self.wfile.write(f"Logged in as {session_data['username']}".encode())
+            else:
+                # If no session, show login form
+                self.wfile.write(b"You are not logged in. <a href='/login'>Login</a>")
+
+        elif self.path == '/login':
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+            self.wfile.write(b\'''
+                <form action="/login" method="post">
+                    <p><input type="text" name="username" placeholder="Username"></p>
+                    <p><input type="submit" value="Login"></p>
+                </form>
+            \''')
+
+        else:
+            self.send_response(404)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+            self.wfile.write(b"404 Not Found")
+
+    def do_POST(self):
+        if self.path == '/login':
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length).decode()
+
+            # Parse the form data
+            form_data = parse_qs(post_data)
+            username = form_data.get('username', [''])[0]
+
+            # Generate a session ID
+            session_id = self.generate_session_id()
+
+            # Store the session data
+            sessions[session_id] = {'username': username}
+
+            # Set the session ID as a cookie
+            self.send_response(302)
+            self.send_header('Location', '/')
+            self.send_header('Set-Cookie', f'session_id={session_id}; Path=/')
+            self.end_headers()
+
+        else:
+            self.send_response(404)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+            self.wfile.write(b"404 Not Found")
+
+'''
