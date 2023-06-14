@@ -1,8 +1,12 @@
-def login(session, data):
+import json
+
+def login(parent, session, data):
+    x = json.dumps({"hi":"lo"})  
+    parent._set_response()
+    parent.wfile.write(x.encode())
+
+def logout(parent, session, data):
     pass
 
-def logout(session, data):
-    pass
-
-def get_user(session, data):
+def get_user(parent, session, data):
     pass
