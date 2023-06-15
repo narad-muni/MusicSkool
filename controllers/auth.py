@@ -1,12 +1,17 @@
 import json
+from flask import jsonify
+def login(request, session):
+    try:
+        username = request.form.get('username')
+        password = request.form.get('password')
 
-def login(parent, session, data):
-    x = json.dumps({"hi":"lo"})  
-    parent._set_response()
-    parent.wfile.write(x.encode())
 
-def logout(parent, session, data):
+        return jsonify({"hi":"yo"}), 203
+    except:
+        pass
+
+def logout(request, session):
     pass
 
-def get_user(parent, session, data):
+def get_user(request, session):
     pass

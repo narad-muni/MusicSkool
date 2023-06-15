@@ -1,0 +1,47 @@
+Pages
+
+    Common
+        Login - 1
+        Logout - 1
+
+    Admin
+        CRU Students - 3
+        U Student - 1
+        CRU Teachers - 3
+        CRU Subject - 3
+        CRU Instruments - 3
+
+    Teacher
+        RU My Subjects - 2 // attendance and marks update
+        R Student Attendance - 1 // only  show attendance and marks subject wise
+        R Student Marks - 1
+
+    Students
+        R My Subjects - 1 // show marks, teacher, attendance
+
+Requests
+
+    Common
+        Login - 1
+        Logout - 1
+
+    Admin
+        CRUD Students - 4
+        U Student - 1
+        CRUD Teachers - 4
+        CRUD Subject - 4
+        CRUD Instruments - 4
+
+    Teacher
+        CRU My Subjects - 3
+        CRU My Attendance - 3
+        CRU My Marks - 3
+
+    Students
+        R My Subjects - 1
+        R My Attendance - 1
+        R My Marks - 1
+
+
+total 20
+total 31 request

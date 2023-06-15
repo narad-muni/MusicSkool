@@ -1,23 +1,24 @@
-from flask import Flask, session, request, jsonify
+from flask import Flask, session, request, render_template, jsonify, redirect, url_for
+from controllers import auth
+from utils import migrate
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
+@app.route('/')
+def index_template():
+    success = request.args.get('success')
+    error = request.args.get('errr')
+    
+    return render_template('index.html', success=success, error=error)
+
+@app.route('/login', methods=['GET'])
+def login_template():
+    return render_template('login.html')
 
 @app.route('/login', methods=['POST'])
-def login():
-    data = request.get_json()
-    print(data)
-    username = data.get('username')
-    password = data.get('password')
-
-    # Perform authentication logic here
-    # For simplicity, we're using a hardcoded username and password
-    if username == 'admin' and password == 'password':
-        session['username'] = username
-        return jsonify({'message': 'Logged in successfully'})
-    else:
-        return jsonify({'message': 'Invalid credentials'}), 401
+def login_request():
+    return auth.login(request, session)
 
 
 @app.route('/profile')
@@ -34,6 +35,14 @@ def logout():
     session.pop('username', None)
     return jsonify({'message': 'Logged out successfully'})
 
+@app.route('/poppulate')
+def poppulate():
+    try:
+        migrate.poppulate()
+        return redirect(url_for('index_template', success='John'))
+    except:
+        return redirect(url_for('index_template', error=30))        
 
 if __name__ == '__main__':
+    migrate.init()
     app.run()
