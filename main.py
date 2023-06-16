@@ -10,16 +10,19 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 @app.route('/')
 def index_template():
     success = request.args.get('success')
-    error = request.args.get('err')
+    error = request.args.get('error')
     
     return render_template('index.html', success=success, error=error)
 
-@app.route('/login', methods=['GET'])
+@app.route('/login')
 def login_template():
-    return render_template('login.html')
+    success = request.args.get('success')
+    error = request.args.get('error')
 
-@app.route('/login', methods=['POST'])
-def login_request():
+    return render_template('login.html', success=success, error=error)
+
+@app.route('/login_action')
+def login_action():
     return auth.login(request, session)
 
 

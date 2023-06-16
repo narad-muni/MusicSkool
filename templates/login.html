@@ -13,23 +13,27 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
           <div class="col-md-4">
+            {% if error != None %}
             <div class="alert alert-danger" role="alert">
-                Invalid username or password.
+                {{error}}
             </div>
-            <div class="alert alert-success" role="alert">
-                Logged out successfully
+            {% endif %}
+            {% if success %}
+            <div class="alert alert-danger" role="alert">
+                {{ success }}
             </div>
+            {% endif %}
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Login</h5>
-                <form>
+                <form method="GET" action="/login_action">
                   <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
-                    <input required type="text" class="form-control" id="username" placeholder="Enter your username">
+                    <input required type="text" class="form-control" name="username" placeholder="Enter your username">
                   </div>
                   <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input required type="password" class="form-control" id="password" placeholder="Enter your password">
+                    <input required type="password" class="form-control" name="password" placeholder="Enter your password">
                   </div>
                   <button type="submit" class="btn btn-primary">Login</button>
                 </form>

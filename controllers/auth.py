@@ -1,14 +1,19 @@
 import json
-from flask import jsonify
+from flask import jsonify, redirect, url_for
+
 def login(request, session):
     try:
-        username = request.form.get('username')
-        password = request.form.get('password')
+        username = request.args.get('username')
+        password = request.args.get('password')
 
+        print(request, request.args)
 
-        return jsonify({"hi":"yo"}), 203
+        if(username == 'admin' and password == 'password'):
+            return redirect(url_for('index_template', success="Logged In Successfully"))
+        else:
+            return redirect(url_for('login_template', error="Invalid Username or Password"))
     except:
-        pass
+        return redirect(url_for('login_template', error="Some error occured"))
 
 def logout(request, session):
     pass
