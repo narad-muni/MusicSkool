@@ -4,11 +4,13 @@ from utils import migrate
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
+app.jinja_env.auto_reload = True
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 @app.route('/')
 def index_template():
     success = request.args.get('success')
-    error = request.args.get('errr')
+    error = request.args.get('err')
     
     return render_template('index.html', success=success, error=error)
 
@@ -44,5 +46,8 @@ def poppulate():
         return redirect(url_for('index_template', error=30))        
 
 if __name__ == '__main__':
-    migrate.init()
-    app.run()
+    try:
+        migrate.init()
+        app.run()
+    except Exception as e:
+        print("Server failed to start : ",e)
