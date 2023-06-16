@@ -1,52 +1,52 @@
 from flask import Flask, session, request, render_template, jsonify, redirect, url_for
-from controllers import auth
+from controllers import auth, templates_controller
 from utils import migrate
+
+# Config
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 app.jinja_env.auto_reload = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
+# Templates
+
 @app.route('/')
 def index_template():
-    success = request.args.get('success')
-    error = request.args.get('error')
-    
-    return render_template('index.html', success=success, error=error)
+    return templates_controller.index_template(request, session)
 
 @app.route('/login')
 def login_template():
-    success = request.args.get('success')
-    error = request.args.get('error')
+    return templates_controller.login_template(request, session)
 
-    return render_template('login.html', success=success, error=error)
+# Actions
 
 @app.route('/login_action')
 def login_action():
     return auth.login(request, session)
 
-
-@app.route('/profile')
-def profile():
-    if 'username' in session:
-        username = session['username']
-        return jsonify({'username': username})
-    else:
-        return jsonify({'message': 'Unauthorized'}), 401
-
-
-@app.route('/logout')
+@app.route('/logout_action')
 def logout():
     session.pop('username', None)
-    return jsonify({'message': 'Logged out successfully'})
+
+    request.args = request.args.copy()
+
+    request.args["success"] = "Logged out successfully"
+    return templates_controller.login_template(request, session)
+
+# Custom Endpoints
 
 @app.route('/poppulate')
 def poppulate():
+    request.args = request.args.copy()
+
     try:
         migrate.poppulate()
-        return redirect(url_for('index_template', success='John'))
+        request.args["success"] = "Poppulating DB Successful"
     except:
-        return redirect(url_for('index_template', error=30))        
+        request.args["error"] = "Poppulating DB Failed"
+
+    return templates_controller.index_template(request, session)
 
 if __name__ == '__main__':
     try:

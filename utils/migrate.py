@@ -25,7 +25,7 @@ def init():
 
         generate_schema()
         poppulate_data()
-
+        
     else:
         reload_cnx()
 

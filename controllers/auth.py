@@ -1,4 +1,3 @@
-import json
 from flask import jsonify, redirect, url_for
 
 def login(request, session):
@@ -9,6 +8,7 @@ def login(request, session):
         print(request, request.args)
 
         if(username == 'admin' and password == 'password'):
+            session["username"] = username
             return redirect(url_for('index_template', success="Logged In Successfully"))
         else:
             return redirect(url_for('login_template', error="Invalid Username or Password"))
