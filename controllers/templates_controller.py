@@ -4,13 +4,13 @@ def index_template(request, session):
     success = request.args.get('success')
     error = request.args.get('error')
 
-    if(session.get("username")):
+    if(session.get("user")):
         return render_template('index.html', success=success, error=error)
     else:
         return redirect(url_for('login_template', success=success, error="Please Login to continue"))
     
 def login_template(request, session):
-    if(session.get("username")):
+    if(session.get("user")):
         success = request.args.get('success')
         error = request.args.get('error')
         return render_template('index.html', success=success, error=error)

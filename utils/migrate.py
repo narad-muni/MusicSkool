@@ -36,7 +36,7 @@ def generate_schema():
     execute_query('''
         CREATE TABLE IF NOT EXISTS `user` (
             `id` INT AUTO_INCREMENT PRIMARY KEY,
-            `name` VARCHAR(255),
+            `username` VARCHAR(255),
             `password` VARCHAR(255),
             `role` VARCHAR(50)
         );
@@ -75,11 +75,21 @@ def generate_schema():
 def poppulate_data():
     execute_query('''
         INSERT INTO `user`(
-            name, password, role
+            username, password, role
         )
         values(
             'admin',
             'admin123',
             'admin'
+        ),
+        (
+            'student',
+            'student123',
+            'student'
+        ),
+        (
+            'teacher',
+            'teacher123',
+            'teacher'
         )
     ''')

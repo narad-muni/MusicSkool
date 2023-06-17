@@ -5,19 +5,21 @@ Pages
         Logout - 1
 
     Admin
-        CRU Students - 3
-        U Student - 1
-        CRU Teachers - 3
-        CRU Subject - 3
-        CRU Instruments - 3
+        // update & delete are only actions
+        CR Students - 2
+        CR Teachers - 2
+        CR Subject - 2
+        CR Instruments - 2
 
     Teacher
-        RU My Subjects - 2 // attendance and marks update
+        R My Subjects - 1
         R Student Attendance - 1 // only  show attendance and marks subject wise
-        R Student Marks - 1
+        R Student Marks - 1 // updates are only actions
 
     Students
-        R My Subjects - 1 // show marks, teacher, attendance
+        R My Subjects - 1
+        R My attendance - 1
+        R My Marks - 1
 
 Requests
 

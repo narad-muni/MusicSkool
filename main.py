@@ -1,4 +1,4 @@
-from flask import Flask, session, request, render_template, jsonify, redirect, url_for
+from flask import Flask, session, request
 from controllers import auth, templates_controller
 from utils import migrate
 
@@ -26,13 +26,8 @@ def login_action():
     return auth.login(request, session)
 
 @app.route('/logout_action')
-def logout():
-    session.pop('username', None)
-
-    request.args = request.args.copy()
-
-    request.args["success"] = "Logged out successfully"
-    return templates_controller.login_template(request, session)
+def logout_action():
+    return auth.logout(request, session)
 
 # Custom Endpoints
 
@@ -48,9 +43,13 @@ def poppulate():
 
     return templates_controller.index_template(request, session)
 
-if __name__ == '__main__':
+with app.app_context():
     try:
-        migrate.init()
-        app.run()
+        migrate.poppulate()
+        # migrate.init()
     except Exception as e:
         print("Server failed to start : ",e)
+
+
+if __name__ == '__main__':
+    app.run()
