@@ -28,31 +28,31 @@
                 </div>
             </div>
             <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                <th>Subject</th>
-                <th>Instrument</th>
-                <th>Teacher</th>
-                <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for d in data %}
+                <thead>
                     <tr>
-                        <td>{{d[1]}}</td>
-                        <td>{{d[2]}}</td>
-                        <td>{{d[4]}}</td>
-                        <td>
-                            <a href="/admin_edit_subjects?id={{d[0]}}">
-                                <i class="text-primary bi bi-pencil-square me-2"></i>
-                            </a>
-                            <a href="/admin_delete_subject_action?subject={{d[0]}}">
-                                <i class="text-danger bi bi-trash"></i>
-                            </a>
-                        </td>
+                    <th>Subject</th>
+                    <th>Instrument</th>
+                    <th>Teacher</th>
+                    <th>Actions</th>
                     </tr>
-                {% endfor %}
-            </tbody>
+                </thead>
+                <tbody>
+                    {% for d in data %}
+                        <tr>
+                            <td>{{d[1]}}</td>
+                            <td>{{d[2]}}</td>
+                            <td>{{d[4]}}</td>
+                            <td>
+                                <a href="/admin_edit_subjects?id={{d[0]}}">
+                                    <i class="text-primary bi bi-pencil-square me-2"></i>
+                                </a>
+                                <a href="/admin_delete_subject_action?subject={{d[0]}}">
+                                    <i class="text-danger bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
     </div>

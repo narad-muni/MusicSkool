@@ -57,6 +57,7 @@ def generate_schema():
         CREATE TABLE IF NOT EXISTS `attendence` (
             `id` INT AUTO_INCREMENT PRIMARY KEY,
             `user_id` INT,
+            `subject_id` INT,
             `status` VARCHAR(10),
             `date` DATE DEFAULT CURRENT_DATE
         );
@@ -69,6 +70,15 @@ def generate_schema():
             `subject_id` INT,
             `user_id` INT,
             `marks` INT
+        );
+    ''')
+
+    #Student Subject
+    execute_query('''
+        CREATE TABLE IF NOT EXISTS `student_subject` (
+            `id` INT AUTO_INCREMENT PRIMARY KEY,
+            `subject_id` INT,
+            `user_id` INT
         );
     ''')
 
@@ -123,4 +133,9 @@ def poppulate_data():
             'Drum Set',
             '3'
         )
+    ''')
+
+    execute_query('''
+        INSERT into `student_subject`(subject_id, user_id)
+        values(1,2)
     ''')

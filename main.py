@@ -82,6 +82,13 @@ def admin_edit_users_action():
 def admin_delete_users_action():
     return admin.admin_delete_users_action(request, session)
 
+@app.route('/admin_add_student_subject_action')
+def admin_add_student_subject_action():
+    return admin.admin_add_student_subject_action(request, session)
+
+@app.route('/admin_delete_student_subject_action')
+def admin_delete_student_subject_action():
+    return admin.admin_delete_student_subject_action(request, session)
 
 # Custom Endpoints
 

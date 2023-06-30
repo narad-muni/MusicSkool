@@ -91,6 +91,7 @@ def admin_create_users(request, session):
     
     return render_template('admin_create_users.html', success=success, error=error, role=role)
 
+
 def admin_edit_users(request, session):
     success = request.args.get('success')
     error = request.args.get('error')
@@ -100,8 +101,11 @@ def admin_edit_users(request, session):
         return redirect(url_for('login_template', success=success, error="Please Login to continue"))
 
     data = db.execute_query(f"select id, username, password, role  from `user` u where id={id}")[0]
-    
-    return render_template('admin_edit_users.html', success=success, error=error, data=data)
+    subjects = db.execute_query(f"select id, name  from `subject`")
+    selected_subjects = db.execute_query(f"select ss.id, s.name, s.id  from `student_subject` ss join `subject` s on s.id = ss.subject_id where ss.user_id = {id}")
+    selected_subjects_arr = [s[2] for s in selected_subjects]
+
+    return render_template('admin_edit_users.html', success=success, error=error, data=data, selected_subjects_arr=selected_subjects_arr, subjects=subjects, selected_subjects=selected_subjects)
 
 def login_template(request, session):
     if(session.get("user")):
