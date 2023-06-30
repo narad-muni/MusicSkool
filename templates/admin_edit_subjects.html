@@ -22,19 +22,20 @@
         <div class="row justify-content-center">
           <div class="col-lg-6">
             <h2 class="text-center">Create Subjects</h2>
-            <form action="/admin_create_subject_action" method="GET">
+            <form action="/admin_edit_subject_action" method="GET">
+              <input value="{{data[0]}}" name="id" type="hidden">
               <div class="mb-3">
                 <label class="form-label">Subject</label>
-                <input name="subject" type="text" class="form-control" required>
+                <input value="{{data[1]}}" name="subject" type="text" class="form-control" required>
               </div>
               <div class="mb-3">
                 <label class="form-label">Instrument</label>
-                <input name="instrument" type="text" class="form-control" required>
+                <input value="{{data[2]}}" name="instrument" type="text" class="form-control" required>
               </div>
               <div class="mb-3">
                 <label class="form-label">Teacher</label>
                 <select name="teacher" class="form-select" aria-label="Default select example">
-                  {% for d in data %}
+                  {% for d in teachers %}
                     <option value="{{d[0]}}">{{d[1]}}</option>
                   {% endfor %}
                 </select>

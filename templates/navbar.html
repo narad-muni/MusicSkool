@@ -9,20 +9,17 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
 
-                {% if session["user"][3] == "admin"%}
+                {% if session.get("user")[3] == "admin"%}
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Students</a>
+                        <a class="nav-link" href="/admin_students">Students</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Teachers</a>
+                        <a class="nav-link" href="/admin_teachers">Teachers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Subjects</a>
+                        <a class="nav-link" href="/admin_subjects">Subjects</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Instruments</a>
-                    </li>
-                {% elif session["user"][3] == "student"%}
+                {% elif session.get("user")[3] == "student"%}
                     <li class="nav-item">
                         <a class="nav-link" href="#">Subjects</a>
                     </li>
@@ -32,7 +29,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Subjects</a>
                     </li>
-                {% elif session["user"][3] == "teacher"%}
+                {% elif session.get("user")[3] == "teacher"%}
                     <li class="nav-item">
                         <a class="nav-link" href="#">Attendance</a>
                     </li>
@@ -47,7 +44,7 @@
                     <a class="nav-link" href="/logout_action">Logout</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">{{ session["user"][1] }}</a>
+                    <a class="nav-link" href="#">{{ session.get("user")[1] }}</a>
                 </li>
             </ul>
         </div>

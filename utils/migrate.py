@@ -91,5 +91,36 @@ def poppulate_data():
             'teacher',
             'teacher123',
             'teacher'
+        ),
+        (
+            'student2',
+            'student123',
+            'student'
+        ),
+        (
+            'teacher2',
+            'teacher123',
+            'teacher'
+        )
+    ''')
+
+    execute_query('''
+        INSERT INTO `subject`(
+            name, instrument, teacher_id
+        )
+        values(
+            'Beat Boxer',
+            'Hands & Mouth',
+            '3'
+        ),
+        (
+            'Indian Classical',
+            'Tabla',
+            '5'
+        ),
+        (
+            'Rockstar',
+            'Drum Set',
+            '3'
         )
     ''')
