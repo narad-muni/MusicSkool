@@ -19,6 +19,34 @@ def admin_delete_users_action(request, session):
         print(e)
         return redirect(url_for(f'admin_{role}s', error="some error occured"))
 
+def admin_attendance_action(request, session):
+    try:
+        status = request.args.get("status")
+        student_id = request.args.get("student_id")
+        subject_id = request.args.get("subject_id")
+
+        data = db.execute_query(f'''
+            delete from `attendance`
+            where subject_id = {subject_id}
+            and student_id = {student_id}
+            and `date` = CURDATE()
+        ''')
+
+        data = db.execute_query(f'''
+            insert into `attendance`(subject_id, status, student_id, `date`)
+            values(
+                '{subject_id}',
+                '{status}',
+                '{student_id}',
+                CURDATE()
+            )
+        ''')
+
+        return redirect(url_for(f'admin_attendance', success=f"attendance marked successfully"))
+    except Exception as e:
+        print(e)
+        return redirect(url_for('admin_students', error="some error occured"))
+
 def admin_add_student_subject_action(request, session):
     try:
         user_id = request.args.get('user_id', "")

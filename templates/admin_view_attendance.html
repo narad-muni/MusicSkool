@@ -1,0 +1,32 @@
+{% include 'header.html' %}
+
+    {% include 'navbar.html' %}
+
+    <!-- Content -->
+    <div class="container mt-4">
+
+        {% if error != None %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ error }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+
+        {% if success %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ success }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+
+        <div class="row">
+            <h2 class="col">{{subject}}</h2>
+            <h2 class="col text-end">{{student}}</h2>
+        </div>
+        
+        <!-- add some CSS classes -->
+        <div id="demo-calendar-styled"></div>
+        
+    </div>
+    
+{% include 'footer.html' %}

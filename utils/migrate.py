@@ -54,11 +54,11 @@ def generate_schema():
 
     #Attendence
     execute_query('''
-        CREATE TABLE IF NOT EXISTS `attendence` (
+        CREATE TABLE IF NOT EXISTS `attendance` (
             `id` INT AUTO_INCREMENT PRIMARY KEY,
-            `user_id` INT,
+            `student_id` INT,
             `subject_id` INT,
-            `status` VARCHAR(10),
+            `status` VARCHAR(50),
             `date` DATE DEFAULT CURRENT_DATE
         );
     ''')

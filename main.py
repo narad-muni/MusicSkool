@@ -31,10 +31,17 @@ def admin_students():
 def admin_teachers():
     return templates_controller.admin_teachers(request, session)
 
+@app.route('/admin_attendance')
+def admin_attendance():
+    return templates_controller.admin_attendance(request, session)
+
+@app.route('/admin_view_attendance')
+def admin_view_attendance():
+    return templates_controller.admin_view_attendance(request, session)
+    
 @app.route('/admin_create_subjects')
 def admin_create_subjects():
     return templates_controller.admin_create_subjects(request, session)
-
 
 @app.route('/admin_edit_subjects')
 def admin_edit_subjects():
@@ -89,6 +96,10 @@ def admin_add_student_subject_action():
 @app.route('/admin_delete_student_subject_action')
 def admin_delete_student_subject_action():
     return admin.admin_delete_student_subject_action(request, session)
+
+@app.route('/admin_attendance_action')
+def admin_attendance_action():
+    return admin.admin_attendance_action(request, session)
 
 # Custom Endpoints
 

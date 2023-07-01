@@ -1,6 +1,12 @@
 <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
 
 <script>
+    $(document).ready(function () {
+        $("#demo-calendar-styled").zabuto_calendar({
+            classname: 'table table-bordered lightgrey-weekends',
+            events: {{data|safe}}
+        });
+    });
 </script>
 </body>
 </html>

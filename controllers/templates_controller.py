@@ -91,6 +91,64 @@ def admin_create_users(request, session):
     
     return render_template('admin_create_users.html', success=success, error=error, role=role)
 
+def admin_attendance(request, session):
+    success = request.args.get('success')
+    error = request.args.get('error')
+
+    if(not session.get("user")):
+        return redirect(url_for('login_template', success=success, error="Please Login to continue"))
+
+    data2 = db.execute_query(f'''
+        select s.name, s.id, u.username, u.id from `student_subject` ss
+        join `user` u on u.id = ss.user_id
+        join `subject` s on s.id = ss.subject_id
+        where u.role = 'student'
+    ''')
+    
+    data = {}
+    for d in data2:
+        if(d[0] in data):
+            data[d[0]][1].append(
+                [d[2],d[3]]
+            )
+        else:
+            data[d[0]] = [
+                d[1],
+                [
+                    [d[2], d[3]]
+                ]
+            ]
+
+    return render_template('admin_attendance.html', success=success, error=error, data=data)
+
+def admin_view_attendance(request, session):
+    success = request.args.get('success')
+    error = request.args.get('error')
+    student_id = request.args.get('student_id')
+    subject_id = request.args.get('subject_id')
+    student = request.args.get('student')
+    subject = request.args.get('subject')
+
+    if(not session.get("user")):
+        return redirect(url_for('login_template', success=success, error="Please Login to continue"))
+
+    data2 = db.execute_query(f'''
+        select `date`, status from `attendance` a
+        where student_id = {student_id}
+        and subject_id = {subject_id}
+    ''')
+
+    data = []
+
+    for d in data2:
+        data.append(
+            {
+                "date": str(d[0]),
+                "classname": d[1]
+            }
+        )
+
+    return render_template('admin_view_attendance.html', success=success, error=error, student=student, subject=subject, data=data)
 
 def admin_edit_users(request, session):
     success = request.args.get('success')
