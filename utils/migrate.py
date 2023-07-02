@@ -18,14 +18,17 @@ def init():
 
     db_exists = execute_query("SHOW DATABASES LIKE 'MusicSchool';")
 
-    if(not db_exists):
+    if(len(db_exists) == 0):
+            
+        execute_query("DROP DATABASE IF EXISTS MusicSchool;")
+
         execute_query("CREATE DATABASE MusicSchool;")
 
         reload_cnx()
 
         generate_schema()
+
         poppulate_data()
-        
     else:
         reload_cnx()
 

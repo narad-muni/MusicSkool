@@ -1,2 +1,3 @@
 pip install -r requirements.txt
-gunicorn main:app --reload 
+pip3 install -r requirements.txt
+gunicorn main:app

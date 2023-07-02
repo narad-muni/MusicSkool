@@ -158,8 +158,7 @@ def poppulate():
 
 with app.app_context():
     try:
-        migrate.poppulate()
-        # migrate.init()
+        migrate.init()
     except Exception as e:
         print("Server failed to start : ",e)
 
