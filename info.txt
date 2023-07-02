@@ -1,0 +1,23 @@
+Music School Project
+
+Tools used
+    Python
+    Mysql
+    Jinja2 - html templating engine
+    Flask - server
+    Jquery
+    Bootstrap
+
+Folder Structure
+    controllers folder contains all methods which handle requests.
+    static folder contains js, css assets.
+    templates folder contains html templates.
+    utils folder contains db and other utilities.
+
+Windows
+    start mysql server on localhost port 3306 (Default)
+    Run 'run.bat' file in command prompt.
+
+Linux
+    start mysql server on localhost port 3306 (Default)
+    Run 'run.sh' file in shell/terminal.
