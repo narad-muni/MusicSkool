@@ -106,6 +106,10 @@ def admin_edit_subject_action():
 def admin_marks_action():
     return admin.admin_marks_action(request, session)
 
+@app.route('/teacher_marks_action')
+def teacher_marks_action():
+    return teacher_actions.teacher_marks_action(request, session)
+
 @app.route('/admin_delete_subject_action')
 def admin_delete_subject_action():
     return admin.admin_delete_subject_action(request, session)
@@ -133,6 +137,10 @@ def admin_delete_student_subject_action():
 @app.route('/admin_attendance_action')
 def admin_attendance_action():
     return admin.admin_attendance_action(request, session)
+
+@app.route('/teacher_attendance_action')
+def teacher_attendance_action():
+    return teacher_actions.teacher_attendance_action(request, session)
 
 # Custom Endpoints
 

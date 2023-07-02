@@ -1,0 +1,64 @@
+{% include 'header.html' %}
+
+    {% include 'navbar.html' %}
+
+    <!-- Content -->
+    <div class="container mt-4">
+
+        {% if error != None %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ error }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+
+        {% if success %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ success }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+            
+        <div class="row">
+            <div class="col">
+                <div class="row mb-3">
+                    <h1 class="col">Attendance</h1>
+                </div>
+                {% for subject, students in data.items() %}
+                    <h3 class="col">{{subject}}</h3>
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                            <th>Name</th>
+                            <th>Attendance</th>
+                            <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in students[1] %}
+                                <tr>
+                                    <td>{{student[0]}}</td>
+                                    <td>
+                                        <a href="/admin_view_attendance?student_id={{student[1]}}&student={{student[0]}}&subject={{subject}}&subject_id={{students[0]}}" class="btn btn-primary">
+                                            View
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-success" href="/teacher_attendance_action?status=bg-success text-white&subject_id={{students[0]}}&student_id={{student[1]}}">
+                                            Present
+                                        </a>
+                                        <a class="btn btn-danger" href="/teacher_attendance_action?status=bg-danger text-white&subject_id={{students[0]}}&student_id={{student[1]}}">
+                                            Absent
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endfor %}
+            </div>
+        </div>
+        
+    </div>
+    
+{% include 'footer.html' %}
