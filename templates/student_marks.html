@@ -24,18 +24,16 @@
                 <div class="row mb-3">
                     <h1 class="col">Marks</h1>
                 </div>
-
-                {% for subject, students in data.items() %}
-                    <h3 class="col">{{subject}}</h3>
-                    <table class="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                            <th>Name</th>
-                            <th>subject</th>
-                            <th>Marks</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                        <th>Name</th>
+                        <th>subject</th>
+                        <th>Marks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for subject, students in data.items() %}
                             {% for student in students[1] %}
                                 <tr>
                                     <td>{{student[1]}}</td>
@@ -43,9 +41,17 @@
                                     <td>{{student[2]}}</td>
                                 </tr>
                             {% endfor %}
-                        </tbody>
-                    </table>
-                {% endfor %}
+                        {% endfor %}
+                        <tr>
+                            <td colspan="2">
+                                Total
+                            </td>
+                            <td>
+                                {{total}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
         

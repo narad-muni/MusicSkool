@@ -18,16 +18,17 @@ def student_subjects(request, session):
     return render_template('student_subjects.html', success=success, error=error, data=data)
 
 def student_attendance(request, session):
+    user = session.get("user")
+    subject_id = request.args.get('subject_id')
+    subject = request.args.get('subject')
     success = request.args.get('success')
     error = request.args.get('error')
-    user = session.get("user")
-    student_id = user[0]
-    subject_id = request.args.get('subject_id')
-    student = user[1]
-    subject = request.args.get('subject')
 
     if(not session.get("user")):
         return redirect(url_for('login_template', success=success, error="Please Login to continue"))
+
+    student_id = user[0]
+    student = user[1]
 
     data2 = db.execute_query(f'''
         select `date`, status from `attendance` a
@@ -63,11 +64,14 @@ def student_marks(request, session):
     ''')
     
     data = {}
+    total = 0
+
     for d in data2:
         if(d[0] in data):
             data[d[0]][1].append(
                 [d[2], d[3], d[4]]
             )
+            total += d[4]
         else:
             data[d[0]] = [
                 d[1],
@@ -75,5 +79,6 @@ def student_marks(request, session):
                     [d[2], d[3], d[4]]
                 ]
             ]
+            total += d[4]
 
-    return render_template('student_marks.html', success=success, error=error, data=data)
+    return render_template('student_marks.html', success=success, error=error, data=data, total=total)
