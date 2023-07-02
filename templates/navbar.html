@@ -27,23 +27,20 @@
                     </li>
                 {% elif session.get("user")[3] == "student"%}
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Subjects</a>
+                        <a class="nav-link" href="/student_subjects">Subjects</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Marks</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Subjects</a>
+                        <a class="nav-link" href="/student_marks">Marks</a>
                     </li>
                 {% elif session.get("user")[3] == "teacher"%}
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Attendance</a>
+                        <a class="nav-link" href="/teacher_subjects">Subjects</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Marks</a>
+                        <a class="nav-link" href="/teacher_marks">Marks</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Subjects</a>
+                        <a class="nav-link" href="/teacher_attendance">Attendance</a>
                     </li>
                 {% endif %}
                 <li class="nav-item">

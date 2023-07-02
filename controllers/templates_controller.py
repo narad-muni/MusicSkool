@@ -18,10 +18,10 @@ def user_main_template(request, session):
 
     if(session.get("user")[3] == "admin"):
         return redirect(url_for('admin_subjects'))
-    # elif(session.get("user")[3] == "teacher"):
-    #     return render_template('teacher_subjects.html', success=success, error=error)
-    # else:
-    #     return render_template('student_subjects.html', success=success, error=error)
+    elif(session.get("user")[3] == "teacher"):
+        return redirect(url_for('teacher_subjects'))
+    else:
+        return redirect(url_for('student_subjects'))
     
 def admin_subjects(request, session):
     success = request.args.get('success')

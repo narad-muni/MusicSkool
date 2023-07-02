@@ -1,5 +1,5 @@
 from flask import Flask, session, request
-from controllers import auth, templates_controller, admin
+from controllers import auth, templates_controller, admin, teacher_actions, teacher_views, student_actions, student_views
 from utils import migrate
 
 # Config
@@ -23,6 +23,14 @@ def login_template():
 def admin_subjects():
     return templates_controller.admin_subjects(request, session)
 
+@app.route('/teacher_subjects')
+def teacher_subjects():
+    return teacher_views.teacher_subjects(request, session)
+
+@app.route('/student_subjects')
+def student_subjects():
+    return student_views.student_subjects(request, session)
+
 @app.route('/admin_students')
 def admin_students():
     return templates_controller.admin_students(request, session)
@@ -38,6 +46,23 @@ def admin_attendance():
 @app.route('/admin_marks')
 def admin_marks():
     return templates_controller.admin_marks(request, session)
+
+@app.route('/teacher_attendance')
+def teacher_attendance():
+    return teacher_views.teacher_attendance(request, session)
+
+@app.route('/teacher_marks')
+def teacher_marks():
+    return teacher_views.teacher_marks(request, session)
+
+
+@app.route('/student_attendance')
+def student_attendance():
+    return student_views.student_attendance(request, session)
+
+@app.route('/student_marks')
+def student_marks():
+    return student_views.student_marks(request, session)
 
 @app.route('/admin_view_attendance')
 def admin_view_attendance():
