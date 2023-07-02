@@ -18,6 +18,9 @@ Windows
     start mysql server on localhost port 3306 (Default)
     Run 'run.bat' file in command prompt.
 
-Linux
+Linux / Mac OS
     start mysql server on localhost port 3306 (Default)
     Run 'run.sh' file in shell/terminal.
+
+Visit 
+http://localhost:8000
