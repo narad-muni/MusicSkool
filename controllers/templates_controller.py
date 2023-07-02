@@ -121,6 +121,35 @@ def admin_attendance(request, session):
 
     return render_template('admin_attendance.html', success=success, error=error, data=data)
 
+def admin_marks(request, session):
+    success = request.args.get('success')
+    error = request.args.get('error')
+
+    if(not session.get("user")):
+        return redirect(url_for('login_template', success=success, error="Please Login to continue"))
+
+    data2 = db.execute_query(f'''
+        select s.name, s.id, u.id, u.username, m.marks from `marks` m
+        join `user` u on u.id = m.student_id
+        join `subject` s on s.id = m.subject_id
+    ''')
+    
+    data = {}
+    for d in data2:
+        if(d[0] in data):
+            data[d[0]][1].append(
+                [d[2], d[3], d[4]]
+            )
+        else:
+            data[d[0]] = [
+                d[1],
+                [
+                    [d[2], d[3], d[4]]
+                ]
+            ]
+
+    return render_template('admin_marks.html', success=success, error=error, data=data)
+
 def admin_view_attendance(request, session):
     success = request.args.get('success')
     error = request.args.get('error')

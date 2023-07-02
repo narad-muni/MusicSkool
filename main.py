@@ -35,6 +35,10 @@ def admin_teachers():
 def admin_attendance():
     return templates_controller.admin_attendance(request, session)
 
+@app.route('/admin_marks')
+def admin_marks():
+    return templates_controller.admin_marks(request, session)
+
 @app.route('/admin_view_attendance')
 def admin_view_attendance():
     return templates_controller.admin_view_attendance(request, session)
@@ -72,6 +76,10 @@ def admin_create_subject_action():
 @app.route('/admin_edit_subject_action')
 def admin_edit_subject_action():
     return admin.admin_edit_subject_action(request, session)
+
+@app.route('/admin_marks_action')
+def admin_marks_action():
+    return admin.admin_marks_action(request, session)
 
 @app.route('/admin_delete_subject_action')
 def admin_delete_subject_action():

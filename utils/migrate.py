@@ -68,7 +68,7 @@ def generate_schema():
         CREATE TABLE IF NOT EXISTS `marks` (
             `id` INT AUTO_INCREMENT PRIMARY KEY,
             `subject_id` INT,
-            `user_id` INT,
+            `student_id` INT,
             `marks` INT
         );
     ''')
