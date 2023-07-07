@@ -1,29 +1,11 @@
-import mysql.connector
+import sqlite3
+import os
 
-cnx = mysql.connector.connect(
-    host='localhost',
-    port=3306,
-    user='root'
-)
+cnx = None
 
-def old_cnx():
+def make_db():
     global cnx
-
-    cnx = mysql.connector.connect(
-        host='localhost',
-        port=3306,
-        user='root'
-    )
-
-def reload_cnx(host="localhost", user="root", database="MusicSchool"):
-    global cnx
-
-    cnx = mysql.connector.connect(
-        host=host,
-        port=3306,
-        user=user,
-        database=database
-    )
+    cnx = sqlite3.connect("music_school.db")
 
 # Function to execute SQL queries
 def execute_query(query):

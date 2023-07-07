@@ -1,3 +1,3 @@
 pip install -r requirements.txt
 pip3 install -r requirements.txt
-gunicorn main:app
+python3 main.py

@@ -14,6 +14,7 @@ def login(request, session):
         else:
             return redirect(url_for('login_template', error="Invalid Username or Password"))
     except Exception as e:
+        print(e)
         return redirect(url_for('login_template', error="Some error occured"))
 
 def logout(request, session):

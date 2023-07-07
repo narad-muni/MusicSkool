@@ -1,36 +1,28 @@
-from utils.db import execute_query, reload_cnx, old_cnx
+from utils.db import execute_query, make_db
+import os
 
 def poppulate():
-    old_cnx()
+    if(os.path.exists("music_school.db")):
+        os.remove("music_school.db")
 
-    execute_query("DROP DATABASE IF EXISTS MusicSchool;")
-
-    execute_query("CREATE DATABASE MusicSchool;")
-
-    reload_cnx()
+    make_db()
 
     generate_schema()
 
     poppulate_data()
 
 def init():
-    old_cnx()
 
-    db_exists = execute_query("SHOW DATABASES LIKE 'MusicSchool';")
+    if(not os.path.exists("music_school.db")):
 
-    if(len(db_exists) == 0):
-            
-        execute_query("DROP DATABASE IF EXISTS MusicSchool;")
-
-        execute_query("CREATE DATABASE MusicSchool;")
-
-        reload_cnx()
+        make_db()
 
         generate_schema()
 
         poppulate_data()
+
     else:
-        reload_cnx()
+        make_db()
 
 
 def generate_schema():
@@ -38,7 +30,7 @@ def generate_schema():
     #User
     execute_query('''
         CREATE TABLE IF NOT EXISTS `user` (
-            `id` INT AUTO_INCREMENT PRIMARY KEY,
+            `id` INTEGER  PRIMARY KEY AUTOINCREMENT,
             `username` VARCHAR(255),
             `password` VARCHAR(255),
             `role` VARCHAR(50)
@@ -48,7 +40,7 @@ def generate_schema():
     #Subject
     execute_query('''
         CREATE TABLE IF NOT EXISTS `subject` (
-            `id` INT AUTO_INCREMENT PRIMARY KEY,
+            `id` INTEGER  PRIMARY KEY AUTOINCREMENT,
             `name` VARCHAR(255),
             `instrument` VARCHAR(255),
             `teacher_id` INT
@@ -58,7 +50,7 @@ def generate_schema():
     #Attendence
     execute_query('''
         CREATE TABLE IF NOT EXISTS `attendance` (
-            `id` INT AUTO_INCREMENT PRIMARY KEY,
+            `id` INTEGER  PRIMARY KEY AUTOINCREMENT,
             `student_id` INT,
             `subject_id` INT,
             `status` VARCHAR(50),
@@ -69,7 +61,7 @@ def generate_schema():
     #Marks
     execute_query('''
         CREATE TABLE IF NOT EXISTS `marks` (
-            `id` INT AUTO_INCREMENT PRIMARY KEY,
+            `id` INTEGER  PRIMARY KEY AUTOINCREMENT,
             `subject_id` INT,
             `student_id` INT,
             `marks` INT
@@ -79,7 +71,7 @@ def generate_schema():
     #Student Subject
     execute_query('''
         CREATE TABLE IF NOT EXISTS `student_subject` (
-            `id` INT AUTO_INCREMENT PRIMARY KEY,
+            `id` INTEGER  PRIMARY KEY AUTOINCREMENT,
             `subject_id` INT,
             `user_id` INT
         );

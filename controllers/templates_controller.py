@@ -31,6 +31,7 @@ def admin_subjects(request, session):
         return redirect(url_for('login_template', success=success, error="Please Login to continue"))
 
     data = db.execute_query("select s.id, s.name, instrument, teacher_id, u.username  from `subject` s join `user` u on u.id = s.teacher_id where role='teacher'")
+    print(data)
     
     return render_template('admin_subjects.html', success=success, error=error, data=data)
 

@@ -40,7 +40,7 @@ def admin_attendance_action(request, session):
             delete from `attendance`
             where subject_id = {subject_id}
             and student_id = {student_id}
-            and `date` = CURDATE()
+            and `date` = DATE('now')
         ''')
 
         data = db.execute_query(f'''
@@ -49,7 +49,7 @@ def admin_attendance_action(request, session):
                 '{subject_id}',
                 '{status}',
                 '{student_id}',
-                CURDATE()
+                DATE('now')
             )
         ''')
 
