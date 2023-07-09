@@ -5,7 +5,7 @@ cnx = None
 
 def make_db():
     global cnx
-    cnx = sqlite3.connect("music_school.db")
+    cnx = sqlite3.connect("music_school.db", check_same_thread=False)
 
 # Function to execute SQL queries
 def execute_query(query):
